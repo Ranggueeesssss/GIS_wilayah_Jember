@@ -9,28 +9,21 @@ use Illuminate\Support\Facades\DB;
 
 class KecamatanController extends Controller
 {
-    /**
-     * Menampilkan daftar kecamatan beserta data statistik terbaru.
-     * Mendukung fitur Search (Pencarian) dan Sort (Pengurutan).
-     */
+
     public function index(Request $request)
     {
         $search = $request->query('search');
         $sortBy = $request->query('sort_by', 'nama');
         $sortOrder = $request->query('sort_order', 'asc');
 
-        // Query kecamatan dengan relasi data statistik terbaru
         $query = Kecamatan::with('statistik');
 
-        // Fitur Find / Search (Berdasarkan nama kecamatan)
         if (!empty($search)) {
             $query->where('nama', 'LIKE', '%' . $search . '%');
         }
 
-        // Fitur Sort (Pengurutan kolom)
         $allowedSorts = ['nama', 'latitude', 'longitude', 'jumlah_penduduk', 'laju_pertumbuhan', 'jumlah_desa'];
         if (in_array($sortBy, ['jumlah_penduduk', 'laju_pertumbuhan', 'jumlah_desa'])) {
-            // Sort berdasarkan relasi data statistik
             $query->join('data_statistiks', 'kecamatans.id', '=', 'data_statistiks.kecamatan_id')
                   ->orderBy('data_statistiks.' . $sortBy, $sortOrder)
                   ->select('kecamatans.*');
@@ -42,7 +35,15 @@ class KecamatanController extends Controller
 
         $kecamatans = $query->paginate(15)->withQueryString();
 
-        return view('kecamatan.index', compact('kecamatans', 'search', 'sortBy', 'sortOrder'));
+        // Ringkasan metrik untuk KPI cards di atas tabel
+        $summary = [
+            'total_kecamatan' => Kecamatan::count(),
+            'total_penduduk'  => DataStatistik::sum('jumlah_penduduk'),
+            'total_desa'      => DataStatistik::sum('jumlah_desa'),
+            'avg_laju'        => round(DataStatistik::avg('laju_pertumbuhan'), 2),
+        ];
+
+        return view('kecamatan.index', compact('kecamatans', 'search', 'sortBy', 'sortOrder', 'summary'));
     }
 
     /**
