@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KecamatanController;
+use App\Http\Controllers\StatistikController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +15,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('kecamatan.index');
 });
+
+// Resource routes untuk manajemen Kecamatan (CRUD, Search, Sort)
+Route::resource('kecamatan', KecamatanController::class);
+
+// Resource routes untuk manajemen Data Statistik BPS
+Route::resource('statistik', StatistikController::class)->except(['show']);
+
