@@ -126,11 +126,12 @@
                         </div>
                     </div>
 
-                    {{-- Placeholder Peta (aktif di Tahap 4) --}}
-                    <span class="px-3.5 py-2 text-sm font-medium text-slate-400 cursor-not-allowed hidden md:inline-flex items-center" title="Akan aktif di Tahap 4">
-                        <i class="fa-solid fa-map mr-1.5 opacity-60"></i>
+                    {{-- Link Peta Spasial --}}
+                    <a href="{{ route('peta.index') }}"
+                       class="px-3.5 py-2 text-sm font-semibold rounded-lg transition-all {{ request()->routeIs('peta.*') ? 'bg-emerald-50 text-emerald-700 shadow-sm border border-emerald-200/60' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' }}">
+                        <i class="fa-solid fa-map mr-1.5 text-emerald-600"></i>
                         <span>Peta Spasial</span>
-                    </span>
+                    </a>
 
                     <a href="{{ route('kecamatan.create') }}" 
                        class="ml-1 inline-flex items-center px-4 py-2 text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow-sm shadow-emerald-600/30 transition-all hover:shadow-md hover:-translate-y-0.5">

@@ -3,6 +3,7 @@
 use App\Http\Controllers\KecamatanController;
 use App\Http\Controllers\StatistikController;
 use App\Http\Controllers\SpkController;
+use App\Http\Controllers\PetaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,9 @@ use App\Http\Controllers\SpkController;
 Route::get('/', function () {
     return redirect()->route('kecamatan.index');
 });
+
+// Halaman Peta Spasial (Web GIS)
+Route::get('/peta', [PetaController::class, 'index'])->name('peta.index');
 
 // Resource routes untuk manajemen Kecamatan (CRUD, Search, Sort)
 Route::resource('kecamatan', KecamatanController::class);
