@@ -9,11 +9,14 @@ class PetaController extends Controller
 {
     /**
      * Menampilkan halaman peta spasial (Web GIS) Kabupaten Jember.
-     * Inisialisasi basemap Leaflet.js dengan koordinat pusat Jember.
+     * Mengintegrasikan basemap Leaflet.js dan Layer GeoJSON batas wilayah 31 kecamatan.
      */
     public function index()
     {
         $totalKecamatan = Kecamatan::count();
+
+        // Peta ID kecamatan untuk menghubungkan GeoJSON ke rute detail kecamatan
+        $kecamatanMap = Kecamatan::pluck('id', 'nama');
 
         // Koordinat titik tengah geografis Kabupaten Jember
         $centerCoords = [
@@ -24,6 +27,7 @@ class PetaController extends Controller
 
         return view('peta.index', [
             'totalKecamatan' => $totalKecamatan,
+            'kecamatanMap'   => $kecamatanMap,
             'centerCoords'   => $centerCoords,
         ]);
     }
