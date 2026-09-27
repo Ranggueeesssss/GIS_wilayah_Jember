@@ -4,29 +4,22 @@
 
 @push('styles')
 <style>
-    .skor-bar { transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
-
-    .badge-sangat-tinggi { background:#fee2e2; color:#991b1b; border-color:#fecaca; }
-    .badge-tinggi        { background:#ffedd5; color:#9a3412; border-color:#fed7aa; }
-    .badge-sedang        { background:#fef9c3; color:#854d0e; border-color:#fef08a; }
-    .badge-rendah        { background:#e0f2fe; color:#075985; border-color:#bae6fd; }
-    .badge-sangat-rendah { background:#f1f5f9; color:#475569; border-color:#e2e8f0; }
-
-    .row-sangat-tinggi { background: linear-gradient(90deg, #fff1f2 0%, transparent 60%); }
-    .row-tinggi        { background: linear-gradient(90deg, #fff7ed 0%, transparent 60%); }
-    .row-sedang        { background: linear-gradient(90deg, #fefce8 0%, transparent 60%); }
-    .row-rendah        { background: linear-gradient(90deg, #f0f9ff 0%, transparent 60%); }
-    .row-sangat-rendah { background: transparent; }
+    /* Styling Badge Kategori yang Bersih & Natural */
+    .badge-sangat-tinggi { background:#fee2e2; color:#991b1b; border: 1px solid #fecaca; }
+    .badge-tinggi        { background:#ffedd5; color:#9a3412; border: 1px solid #fed7aa; }
+    .badge-sedang        { background:#fef9c3; color:#854d0e; border: 1px solid #fef08a; }
+    .badge-rendah        { background:#e0f2fe; color:#075985; border: 1px solid #bae6fd; }
+    .badge-sangat-rendah { background:#f1f5f9; color:#475569; border: 1px solid #e2e8f0; }
 </style>
 @endpush
 
 @section('content')
-<div class="space-y-7">
+<div class="space-y-6">
 
     {{-- ─── Breadcrumb & Header ─────────────────────────────────────────────────── --}}
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-            <div class="flex items-center space-x-2 text-sm text-slate-500 mb-2">
+            <div class="flex items-center space-x-2 text-sm text-slate-500 mb-1.5">
                 <a href="{{ route('kecamatan.index') }}" class="hover:text-emerald-600 transition-colors">Beranda</a>
                 <span>/</span>
                 <span class="text-slate-800 font-semibold">Analisis SPK 1</span>
@@ -38,264 +31,245 @@
                 </span>
                 {{ $scenario['nama'] }}
             </h1>
-            <p class="text-sm text-slate-500 mt-1.5 max-w-2xl">
+            <p class="text-sm text-slate-500 mt-1 max-w-2xl">
                 {{ $scenario['deskripsi'] }}
             </p>
         </div>
 
-        {{-- Tombol navigasi ke SPK 2 --}}
-        <a href="{{ route('spk.spk2') }}"
-           class="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-xl transition-all whitespace-nowrap">
-            <i class="fa-solid fa-landmark-dome"></i>
-            <span>Lihat SPK 2 — Administrasi</span>
-            <i class="fa-solid fa-chevron-right text-xs"></i>
-        </a>
+        {{-- Navigasi ke SPK 2 --}}
+        <div class="flex items-center gap-2">
+            <a href="{{ route('spk.spk2') }}"
+               class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-xl transition-all whitespace-nowrap">
+                <i class="fa-solid fa-landmark-dome"></i>
+                <span>Beralih ke SPK 2</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+            </a>
+        </div>
     </div>
 
-    {{-- ─── Banner Tujuan SPK ────────────────────────────────────────────────────── --}}
-    <div class="rounded-2xl bg-gradient-to-r from-blue-700 to-blue-500 p-5 text-white flex flex-col sm:flex-row sm:items-center gap-4 shadow-md shadow-blue-600/20">
-        <div class="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center text-2xl shrink-0">
-            <i class="fa-solid fa-bullseye"></i>
-        </div>
-        <div class="flex-1">
-            <p class="text-xs font-semibold uppercase tracking-wider opacity-80">Tujuan Pengambilan Keputusan</p>
-            <p class="font-bold mt-0.5 text-base">{{ $scenario['tujuan'] }}</p>
-        </div>
-        <div class="flex items-center gap-3 text-sm bg-white/15 rounded-xl px-4 py-2.5">
-            <i class="fa-solid fa-chart-simple text-lg"></i>
+    {{-- ─── Banner Ringkasan Tujuan SPK ────────────────────────────────────────── --}}
+    <div class="rounded-2xl bg-gradient-to-r from-blue-700 to-indigo-600 p-4 sm:p-5 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
+        <div class="flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-xl bg-white/15 flex items-center justify-center text-xl shrink-0">
+                <i class="fa-solid fa-bullseye"></i>
+            </div>
             <div>
-                <p class="font-bold text-xl leading-none">{{ $hasil['jumlah_data'] }}</p>
-                <p class="opacity-80 text-xs">Kecamatan dianalisis</p>
+                <p class="text-xs font-semibold uppercase tracking-wider text-blue-200">Tujuan Analisis</p>
+                <p class="font-bold text-sm sm:text-base mt-0.5">{{ $scenario['tujuan'] }}</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-3 bg-white/10 rounded-xl px-4 py-2 self-start sm:self-auto shrink-0">
+            <i class="fa-solid fa-calculator text-blue-200"></i>
+            <div class="text-xs">
+                <span class="block text-slate-200">Metode Penilaian</span>
+                <strong class="text-white">Simple Additive Weighting</strong>
             </div>
         </div>
     </div>
 
-    {{-- ─── Kartu Kriteria & Bobot ──────────────────────────────────────────────── --}}
-    <div>
-        <h2 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
-            <i class="fa-solid fa-scale-balanced text-blue-500"></i>
-            Kriteria & Bobot Kepentingan (Total: {{ $validasi['total_bobot'] * 100 }}%)
-        </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            @foreach ($scenario['kriteria'] as $key => $krit)
-                @php
-                    $persen = $krit['bobot'] * 100;
-                    $colors = ['jumlah_penduduk' => 'blue', 'laju_pertumbuhan' => 'purple'];
-                    $c = $colors[$key] ?? 'slate';
-                @endphp
-                <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-sm">
-                    <div class="flex items-start justify-between mb-3">
-                        <div>
-                            <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">Kriteria ({{ strtoupper($krit['sifat']) }})</p>
-                            <h3 class="font-bold text-slate-900 mt-0.5">{{ $krit['label'] }}</h3>
-                            <p class="text-xs text-slate-500 mt-1">{{ $krit['alasan'] }}</p>
-                        </div>
-                        <div class="w-14 h-14 rounded-xl bg-{{ $c }}-100 text-{{ $c }}-700 flex flex-col items-center justify-center shrink-0 ml-3 font-bold shadow-sm">
-                            <span class="text-lg leading-none">{{ $persen }}%</span>
-                            <span class="text-[10px] font-medium opacity-70">bobot</span>
-                        </div>
-                    </div>
-                    {{-- Progress bar bobot --}}
-                    <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                        <div class="skor-bar h-full bg-{{ $c }}-500 rounded-full" style="width: {{ $persen }}%"></div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div>
-
-    {{-- ─── Top 3 Podium ────────────────────────────────────────────────────────── --}}
+    {{-- ─── DUA KOLOM GRAFIK (Pengganti Kriteria Statis & Podium) ─────────────── --}}
     @php
-        $top3 = array_slice($hasil['hasil'], 0, 3);
+        // Ambil Top 7 untuk divisualisasikan pada grafik batang
+        $topKecamatan = array_slice($hasil['hasil'], 0, 7);
+        $chartLabels = array_map(fn($r) => $r['nama'], $topKecamatan);
+        $chartScores = array_map(fn($r) => $r['skor_persen'], $topKecamatan);
     @endphp
-    <div>
-        <h2 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
-            <i class="fa-solid fa-trophy text-amber-500"></i>
-            Peringkat Teratas
-        </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            @foreach ($top3 as $i => $podium)
-                @php
-                    $medals = ['🥇', '🥈', '🥉'];
-                    $gradients = [
-                        'from-amber-500 to-yellow-400',
-                        'from-slate-400 to-slate-300',
-                        'from-orange-500 to-amber-400',
-                    ];
-                    $bg = [
-                        'bg-gradient-to-br from-amber-50 to-yellow-50 border-amber-200',
-                        'bg-gradient-to-br from-slate-50 to-zinc-50 border-slate-200',
-                        'bg-gradient-to-br from-orange-50 to-amber-50 border-orange-200',
-                    ];
-                @endphp
-                <div class="rounded-2xl border p-5 {{ $bg[$i] }} shadow-sm">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-3xl">{{ $medals[$i] }}</span>
-                        <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-white/70 text-slate-600 border border-slate-200/60">
-                            #{{ $podium['ranking'] }}
-                        </span>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        
+        <!-- Kolom Kiri (1/3): Grafik Donat Proporsi Bobot Kriteria -->
+        <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-2xs flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-chart-pie text-blue-600"></i>
+                            Bobot Kriteria Penilaian
+                        </h3>
+                        <p class="text-xs text-slate-400 mt-0.5">Proporsi penentu skor SAW</p>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-900">{{ $podium['nama'] }}</h3>
-                    <div class="mt-3 space-y-1">
-                        <div class="text-3xl font-black text-slate-900">
-                            {{ $podium['skor_persen'] }}%
-                        </div>
-                        <p class="text-xs text-slate-500">Skor SAW: {{ number_format($podium['skor'], 6) }}</p>
+                    <span class="text-xs font-bold px-2 py-0.5 bg-blue-50 text-blue-700 rounded-md border border-blue-100">
+                        100%
+                    </span>
+                </div>
+
+                <!-- Canvas Chart Donat -->
+                <div class="relative h-44 my-4 flex items-center justify-center">
+                    <canvas id="chartBobot"></canvas>
+                </div>
+            </div>
+
+            <!-- Keterangan Bobot Kriteria -->
+            <div class="pt-3 border-t border-slate-100 space-y-2 text-xs">
+                <div class="flex items-center justify-between text-slate-700">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-blue-600 shrink-0"></span>
+                        <span class="font-medium">Jumlah Penduduk (Benefit)</span>
                     </div>
-                    {{-- Mini bar skor --}}
-                    <div class="mt-3 h-2 bg-black/10 rounded-full overflow-hidden">
-                        <div class="skor-bar h-full bg-gradient-to-r {{ $gradients[$i] }} rounded-full"
-                             style="width: {{ $podium['skor_persen'] }}%"></div>
+                    <strong class="text-blue-700 font-bold">60%</strong>
+                </div>
+                <div class="flex items-center justify-between text-slate-700">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-indigo-500 shrink-0"></span>
+                        <span class="font-medium">Laju Pertumbuhan (Benefit)</span>
                     </div>
-                    <div class="mt-3 grid grid-cols-2 gap-2 text-xs text-slate-600">
-                        <div>
-                            <span class="opacity-60">Penduduk</span>
-                            <p class="font-bold">{{ number_format($podium['rincian_bobot']['jumlah_penduduk']['nilai_asli'], 0, ',', '.') }}</p>
-                        </div>
-                        <div>
-                            <span class="opacity-60">Laju</span>
-                            <p class="font-bold {{ $podium['rincian_bobot']['laju_pertumbuhan']['nilai_asli'] >= 0 ? 'text-emerald-700' : 'text-rose-600' }}">
-                                {{ $podium['rincian_bobot']['laju_pertumbuhan']['nilai_asli'] > 0 ? '+' : '' }}{{ number_format($podium['rincian_bobot']['laju_pertumbuhan']['nilai_asli'], 2) }}%
-                            </p>
-                        </div>
+                    <strong class="text-indigo-700 font-bold">40%</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kolom Kanan (2/3): Grafik Batang Skor Peringkat Teratas -->
+        <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200/80 p-5 shadow-2xs flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-chart-simple text-blue-600"></i>
+                            Peringkat Skor Tertinggi (Top Kecamatan)
+                        </h3>
+                        <p class="text-xs text-slate-400 mt-0.5">Perbandingan nilai preferensi akhir (V_i) kecamatan teratas</p>
+                    </div>
+                    <div class="text-right text-xs">
+                        <span class="text-slate-400 block text-[10px] uppercase font-semibold">Peringkat 1</span>
+                        <strong class="text-blue-700 font-bold">{{ $topKecamatan[0]['nama'] }} ({{ $topKecamatan[0]['skor_persen'] }}%)</strong>
                     </div>
                 </div>
-            @endforeach
+
+                <!-- Canvas Chart Batang Horizontal -->
+                <div class="relative h-52 my-3">
+                    <canvas id="chartTopRanking"></canvas>
+                </div>
+            </div>
+
+            <!-- Footer Grafik -->
+            <div class="pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
+                <span>Skala persentase skor SAW (0 - 100%)</span>
+                <span>Sumber data: BPS Kab. Jember 2024</span>
+            </div>
         </div>
+
     </div>
 
-    {{-- ─── Filter Kategori & Tabel Lengkap ────────────────────────────────────── --}}
-    <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+    {{-- ─── Tabel Lengkap Hasil SAW (31 Kecamatan) ─────────────────────────────── --}}
+    <div class="bg-white rounded-2xl border border-slate-200/80 shadow-2xs overflow-hidden">
 
-        {{-- Toolbar filter --}}
-        <div class="p-4 border-b border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <h2 class="text-sm font-bold text-slate-700 flex items-center gap-2">
-                <i class="fa-solid fa-list-ol text-blue-500"></i>
-                Tabel Ranking Lengkap — 31 Kecamatan
-            </h2>
+        {{-- Toolbar Filter Kategori --}}
+        <div class="p-4 border-b border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-slate-50/50">
+            <div>
+                <h2 class="text-sm font-bold text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-table-list text-blue-600"></i>
+                    Matriks & Perankingan 31 Kecamatan
+                </h2>
+                <p class="text-xs text-slate-400 mt-0.5">Data nilai asli, nilai normalisasi, dan skor akhir preferensi</p>
+            </div>
 
-            {{-- Filter berdasarkan kategori --}}
-            <div class="flex items-center gap-2 flex-wrap">
-                <span class="text-xs text-slate-500 font-semibold">Filter:</span>
+            {{-- Filter Kategori --}}
+            <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="text-xs text-slate-400 font-medium mr-1">Kategori:</span>
                 @foreach (['semua' => 'Semua', 'Sangat Tinggi' => 'Sangat Tinggi', 'Tinggi' => 'Tinggi', 'Sedang' => 'Sedang', 'Rendah' => 'Rendah', 'Sangat Rendah' => 'Sangat Rendah'] as $val => $label)
                     <a href="{{ route('spk.spk1', ['kategori' => $val]) }}"
-                       class="px-3 py-1 text-xs font-semibold rounded-full border transition-all
+                       class="px-2.5 py-1 text-xs font-semibold rounded-lg border transition-all
                               {{ $filterKategori === $val
-                                 ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
-                                 : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100' }}">
+                                 ? 'bg-blue-600 text-white border-blue-600 shadow-2xs'
+                                 : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50' }}">
                         {{ $label }}
                     </a>
                 @endforeach
             </div>
         </div>
 
-        {{-- Tabel Ranking --}}
+        {{-- Tabel Data --}}
         <div class="overflow-x-auto">
             <table class="w-full text-sm text-left text-slate-700">
-                <thead class="text-xs uppercase font-semibold text-slate-400 bg-slate-50/70 border-b border-slate-100">
+                <thead class="text-xs uppercase font-semibold text-slate-500 bg-slate-50 border-b border-slate-100">
                     <tr>
-                        <th class="px-5 py-3 text-center w-16">Rank</th>
-                        <th class="px-5 py-3">Kecamatan</th>
-                        <th class="px-5 py-3 text-right">Penduduk (Jiwa)</th>
-                        <th class="px-5 py-3 text-center">Normalisasi</th>
-                        <th class="px-5 py-3 text-right">Laju (%)</th>
-                        <th class="px-5 py-3 text-center">Normalisasi</th>
-                        <th class="px-5 py-3 text-right font-bold text-blue-600">Skor Akhir</th>
-                        <th class="px-5 py-3 text-center">Visualisasi</th>
-                        <th class="px-5 py-3 text-center">Kategori</th>
+                        <th class="px-4 py-3 text-center w-14">Rank</th>
+                        <th class="px-4 py-3">Kecamatan</th>
+                        <th class="px-4 py-3 text-right">Penduduk (Jiwa)</th>
+                        <th class="px-4 py-3 text-center font-mono">Norm. (r1)</th>
+                        <th class="px-4 py-3 text-right">Laju Tumbuh</th>
+                        <th class="px-4 py-3 text-center font-mono">Norm. (r2)</th>
+                        <th class="px-4 py-3 text-right font-bold text-blue-700">Skor Akhir (V)</th>
+                        <th class="px-4 py-3 text-center">Kategori</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100">
                     @forelse ($hasilFiltered as $row)
                         @php
-                            $kelasRow = 'row-' . strtolower(str_replace(' ', '-', $row['kategori']));
+                            $badgeMap = [
+                                'Sangat Tinggi' => 'badge-sangat-tinggi',
+                                'Tinggi'        => 'badge-tinggi',
+                                'Sedang'        => 'badge-sedang',
+                                'Rendah'        => 'badge-rendah',
+                                'Sangat Rendah' => 'badge-sangat-rendah',
+                            ];
+                            $badgeKelas = $badgeMap[$row['kategori']] ?? 'badge-sangat-rendah';
                         @endphp
-                        <tr class="{{ $kelasRow }} hover:brightness-95 transition-all">
+                        <tr class="hover:bg-slate-50/80 transition-colors">
                             {{-- Ranking --}}
-                            <td class="px-5 py-3 text-center">
-                                @if ($row['ranking'] <= 3)
-                                    <span class="text-lg">{{ ['🥇','🥈','🥉'][$row['ranking']-1] }}</span>
+                            <td class="px-4 py-3 text-center font-semibold">
+                                @if ($row['ranking'] === 1)
+                                    <span class="inline-flex w-6 h-6 rounded-full bg-blue-600 text-white items-center justify-center text-xs font-bold">1</span>
+                                @elseif ($row['ranking'] <= 3)
+                                    <span class="inline-flex w-6 h-6 rounded-full bg-slate-800 text-white items-center justify-center text-xs font-bold">{{ $row['ranking'] }}</span>
                                 @else
-                                    <span class="inline-flex w-7 h-7 rounded-full bg-slate-100 items-center justify-center text-xs font-bold text-slate-600">
-                                        {{ $row['ranking'] }}
-                                    </span>
+                                    <span class="text-slate-400 text-xs font-mono font-medium">{{ $row['ranking'] }}</span>
                                 @endif
                             </td>
 
                             {{-- Nama Kecamatan --}}
-                            <td class="px-5 py-3 font-semibold text-slate-900">
+                            <td class="px-4 py-3 font-semibold text-slate-900">
                                 <a href="{{ route('kecamatan.show', $row['kecamatan_id']) }}"
                                    class="hover:text-blue-600 transition-colors">
                                     {{ $row['nama'] }}
                                 </a>
                             </td>
 
-                            {{-- Jumlah Penduduk --}}
-                            <td class="px-5 py-3 text-right font-medium">
+                            {{-- Jumlah Penduduk (Nilai Asli) --}}
+                            <td class="px-4 py-3 text-right font-medium">
                                 {{ number_format($row['rincian_bobot']['jumlah_penduduk']['nilai_asli'], 0, ',', '.') }}
                             </td>
 
                             {{-- Normalisasi Penduduk --}}
-                            <td class="px-5 py-3 text-center text-xs font-mono">
-                                <span class="px-2 py-0.5 bg-blue-50 text-blue-700 rounded-md border border-blue-100">
+                            <td class="px-4 py-3 text-center text-xs font-mono">
+                                <span class="px-2 py-0.5 bg-slate-100 text-slate-700 rounded border border-slate-200/60">
                                     {{ number_format($row['rincian_bobot']['jumlah_penduduk']['normalisasi'], 4) }}
                                 </span>
                             </td>
 
-                            {{-- Laju Pertumbuhan --}}
-                            <td class="px-5 py-3 text-right font-medium {{ $row['rincian_bobot']['laju_pertumbuhan']['nilai_asli'] >= 0 ? 'text-emerald-600' : 'text-rose-500' }}">
+                            {{-- Laju Pertumbuhan (Nilai Asli) --}}
+                            <td class="px-4 py-3 text-right font-medium {{ $row['rincian_bobot']['laju_pertumbuhan']['nilai_asli'] >= 0 ? 'text-emerald-600' : 'text-rose-600' }}">
                                 {{ $row['rincian_bobot']['laju_pertumbuhan']['nilai_asli'] > 0 ? '+' : '' }}{{ number_format($row['rincian_bobot']['laju_pertumbuhan']['nilai_asli'], 2) }}%
                             </td>
 
                             {{-- Normalisasi Laju --}}
-                            <td class="px-5 py-3 text-center text-xs font-mono">
-                                <span class="px-2 py-0.5 bg-purple-50 text-purple-700 rounded-md border border-purple-100">
+                            <td class="px-4 py-3 text-center text-xs font-mono">
+                                <span class="px-2 py-0.5 bg-slate-100 text-slate-700 rounded border border-slate-200/60">
                                     {{ number_format($row['rincian_bobot']['laju_pertumbuhan']['normalisasi'], 4) }}
                                 </span>
                             </td>
 
                             {{-- Skor Akhir --}}
-                            <td class="px-5 py-3 text-right">
-                                <div class="font-black text-blue-700 text-base">
+                            <td class="px-4 py-3 text-right">
+                                <div class="font-bold text-blue-700 text-sm">
                                     {{ $row['skor_persen'] }}%
                                 </div>
-                                <div class="text-[10px] font-mono text-slate-400 mt-0.5">
-                                    {{ number_format($row['skor'], 6) }}
+                                <div class="text-[10px] font-mono text-slate-400">
+                                    {{ number_format($row['skor'], 4) }}
                                 </div>
                             </td>
 
-                            {{-- Visualisasi Bar --}}
-                            <td class="px-5 py-3 w-32">
-                                <div class="h-2 bg-slate-100 rounded-full overflow-hidden">
-                                    <div class="skor-bar h-full bg-blue-500 rounded-full"
-                                         style="width: {{ $row['skor_persen'] }}%">
-                                    </div>
-                                </div>
-                                <span class="text-[10px] text-slate-400 mt-0.5 block text-right">{{ $row['skor_persen'] }}%</span>
-                            </td>
-
-                            {{-- Kategori Badge --}}
-                            <td class="px-5 py-3 text-center">
-                                @php
-                                    $kelasMap = [
-                                        'Sangat Tinggi' => 'badge-sangat-tinggi',
-                                        'Tinggi'        => 'badge-tinggi',
-                                        'Sedang'        => 'badge-sedang',
-                                        'Rendah'        => 'badge-rendah',
-                                        'Sangat Rendah' => 'badge-sangat-rendah',
-                                    ];
-                                    $badgeKelas = $kelasMap[$row['kategori']] ?? 'badge-sangat-rendah';
-                                @endphp
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border {{ $badgeKelas }}">
+                            {{-- Kategori --}}
+                            <td class="px-4 py-3 text-center">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold {{ $badgeKelas }}">
                                     {{ $row['kategori'] }}
                                 </span>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="9" class="px-5 py-12 text-center text-slate-400">
-                                <i class="fa-solid fa-filter-circle-xmark text-3xl mb-2 block text-slate-300"></i>
-                                Tidak ada kecamatan dalam kategori yang dipilih.
+                            <td colspan="8" class="px-4 py-10 text-center text-slate-400 text-xs">
+                                Tidak ada data dalam kategori yang dipilih.
                             </td>
                         </tr>
                     @endforelse
@@ -303,60 +277,48 @@
             </table>
         </div>
 
-        {{-- Footer info --}}
-        <div class="px-5 py-3 border-t border-slate-100 bg-slate-50/50 text-xs text-slate-500 flex flex-col sm:flex-row justify-between gap-2">
+        {{-- Footer Tabel --}}
+        <div class="px-4 py-3 border-t border-slate-100 bg-slate-50/50 text-xs text-slate-500 flex flex-col sm:flex-row justify-between items-center gap-2">
             <span>
-                Menampilkan <strong>{{ count($hasilFiltered) }}</strong> dari
-                <strong>{{ $hasil['jumlah_data'] }}</strong> kecamatan
-                @if ($filterKategori !== 'semua')
-                    | Filter aktif: <span class="font-semibold text-blue-600">{{ $filterKategori }}</span>
-                @endif
+                Menampilkan <strong>{{ count($hasilFiltered) }}</strong> dari <strong>{{ $hasil['jumlah_data'] }}</strong> kecamatan
             </span>
-            <span>
-                Metode: <strong>Simple Additive Weighting (SAW)</strong> •
-                Skor tertinggi: <strong>{{ number_format($hasil['skor_tertinggi'], 4) }}</strong> •
-                Skor terendah: <strong>{{ number_format($hasil['skor_terendah'], 4) }}</strong>
-            </span>
+            <div class="flex items-center gap-4 text-slate-400 font-mono text-[11px]">
+                <span>Nilai Tertinggi: <strong class="text-slate-700">{{ number_format($hasil['skor_tertinggi'], 4) }}</strong></span>
+                <span>Nilai Terendah: <strong class="text-slate-700">{{ number_format($hasil['skor_terendah'], 4) }}</strong></span>
+            </div>
         </div>
     </div>
 
-    {{-- ─── Rumus SAW Accordion ─────────────────────────────────────────────────── --}}
-    <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-5">
+    {{-- ─── Panel Rumus & Metodologi SAW ───────────────────────────────────────── --}}
+    <div class="bg-white rounded-2xl border border-slate-200/80 shadow-2xs p-5">
         <button onclick="document.getElementById('panel-rumus').classList.toggle('hidden')"
                 class="w-full flex items-center justify-between text-sm font-bold text-slate-700">
             <span class="flex items-center gap-2">
-                <i class="fa-solid fa-square-root-variable text-blue-500"></i>
-                Detail Rumus Perhitungan Metode SAW
+                <i class="fa-solid fa-circle-question text-blue-500"></i>
+                Penjelasan Formula Matematis Simple Additive Weighting (SAW)
             </span>
-            <i class="fa-solid fa-chevron-down text-slate-400"></i>
+            <i class="fa-solid fa-chevron-down text-slate-400 text-xs"></i>
         </button>
-        <div id="panel-rumus" class="hidden mt-4 space-y-4 text-sm text-slate-700">
+        <div id="panel-rumus" class="hidden mt-4 pt-3 border-t border-slate-100 space-y-4 text-xs text-slate-600">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="bg-blue-50 rounded-xl p-4 border border-blue-100">
-                    <h4 class="font-bold text-blue-800 mb-2">① Normalisasi (Benefit)</h4>
-                    <p class="font-mono bg-white rounded-lg p-3 text-center text-blue-900 border border-blue-100">
+                <div class="bg-slate-50 rounded-xl p-3.5 border border-slate-100">
+                    <h4 class="font-bold text-slate-800 mb-1.5">1. Rumus Normalisasi Kriteria (Benefit)</h4>
+                    <p class="font-mono bg-white rounded p-2 text-center text-blue-900 border border-slate-200">
                         r<sub>ij</sub> = x<sub>ij</sub> / max(x<sub>ij</sub>)
                     </p>
-                    <p class="text-xs text-blue-700 mt-2">Nilai dibagi dengan nilai TERBESAR pada kolom yang sama.</p>
+                    <p class="text-[11px] text-slate-500 mt-1.5">
+                        Nilai tiap kecamatan dibagi dengan nilai tertinggi pada kriteria tersebut.
+                    </p>
                 </div>
-                <div class="bg-purple-50 rounded-xl p-4 border border-purple-100">
-                    <h4 class="font-bold text-purple-800 mb-2">② Skor Akhir (V<sub>i</sub>)</h4>
-                    <p class="font-mono bg-white rounded-lg p-3 text-center text-purple-900 border border-purple-100">
+                <div class="bg-slate-50 rounded-xl p-3.5 border border-slate-100">
+                    <h4 class="font-bold text-slate-800 mb-1.5">2. Rumus Skor Akhir Preferensi (V<sub>i</sub>)</h4>
+                    <p class="font-mono bg-white rounded p-2 text-center text-blue-900 border border-slate-200">
                         V<sub>i</sub> = Σ (W<sub>j</sub> × r<sub>ij</sub>)
                     </p>
-                    <p class="text-xs text-purple-700 mt-2">Jumlahkan hasil perkalian bobot (W) dengan nilai normalisasi (r) tiap kriteria.</p>
+                    <p class="text-[11px] text-slate-500 mt-1.5">
+                        Penjumlahan hasil kali bobot kriteria ($W_j$) dengan nilai normalisasi ($r_{ij}$).
+                    </p>
                 </div>
-            </div>
-            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 text-xs">
-                <h4 class="font-bold text-slate-700 mb-2">③ Rincian Bobot Skenario ini:</h4>
-                <ul class="space-y-1 font-mono text-slate-600">
-                    @foreach ($scenario['kriteria'] as $key => $krit)
-                        <li>
-                            <span class="text-blue-600">W_{{ $loop->iteration }}</span> ({{ $krit['label'] }}) =
-                            <strong>{{ $krit['bobot'] }}</strong> ({{ $krit['bobot'] * 100 }}%)
-                        </li>
-                    @endforeach
-                </ul>
             </div>
         </div>
     </div>
@@ -365,14 +327,123 @@
 @endsection
 
 @push('scripts')
+<!-- Library Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
-    // Animasi bar skor saat halaman dimuat
     document.addEventListener('DOMContentLoaded', function () {
-        const bars = document.querySelectorAll('.skor-bar');
-        bars.forEach(bar => {
-            const targetWidth = bar.style.width;
-            bar.style.width = '0%';
-            setTimeout(() => { bar.style.width = targetWidth; }, 150);
+        // Data Grafik dari Backend
+        const topLabels = @json($chartLabels);
+        const topScores = @json($chartScores);
+
+        // 1. Inisialisasi Grafik Donat (Bobot Kriteria)
+        const ctxBobot = document.getElementById('chartBobot').getContext('2d');
+        new Chart(ctxBobot, {
+            type: 'doughnut',
+            data: {
+                labels: ['Jumlah Penduduk', 'Laju Pertumbuhan'],
+                datasets: [{
+                    data: [60, 40],
+                    backgroundColor: ['#2563eb', '#6366f1'],
+                    borderWidth: 2,
+                    borderColor: '#ffffff',
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                return ` ${context.label}: ${context.raw}% (Benefit)`;
+                            }
+                        }
+                    }
+                },
+                cutout: '68%'
+            }
+        });
+
+        // 2. Inisialisasi Grafik Batang Horizontal (Top Kecamatan)
+        const ctxTop = document.getElementById('chartTopRanking').getContext('2d');
+        new Chart(ctxTop, {
+            type: 'bar',
+            data: {
+                labels: topLabels,
+                datasets: [{
+                    label: 'Skor Akhir (%)',
+                    data: topScores,
+                    backgroundColor: [
+                        '#1d4ed8', // Rank 1 (Biru Tua Kuat)
+                        '#2563eb', // Rank 2
+                        '#3b82f6', // Rank 3
+                        '#60a5fa', // Rank 4
+                        '#93c5fd', // Rank 5
+                        '#93c5fd', // Rank 6
+                        '#bfdbfe'  // Rank 7
+                    ],
+                    borderRadius: 6,
+                    borderSkipped: false,
+                    barThickness: 18
+                }]
+            },
+            options: {
+                indexAxis: 'y', // Tampilan Bar Horizontal
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: {
+                            color: '#f1f5f9'
+                        },
+                        ticks: {
+                            callback: function (val) {
+                                return val + '%';
+                            },
+                            font: {
+                                size: 10
+                            },
+                            color: '#94a3b8'
+                        }
+                    },
+                    y: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            font: {
+                                size: 11,
+                                weight: '600'
+                            },
+                            color: '#334155'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: '#0f172a',
+                        titleFont: { size: 12, weight: 'bold' },
+                        bodyFont: { size: 11 },
+                        padding: 10,
+                        cornerRadius: 8,
+                        callbacks: {
+                            label: function (context) {
+                                return ` Skor SAW: ${context.raw}%`;
+                            }
+                        }
+                    }
+                }
+            }
         });
     });
 </script>
