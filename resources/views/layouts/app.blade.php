@@ -93,21 +93,50 @@
                         <span>Data Wilayah</span>
                     </a>
 
-                    <!-- Tombol Navigasi Placeholder untuk Peta & SPK yang akan aktif di tahap selanjutnya -->
-                    <span class="px-3.5 py-2 text-sm font-medium text-slate-400 cursor-not-allowed hidden md:inline-flex items-center">
-                        <i class="fa-solid fa-map mr-1.5 opacity-60"></i>
-                        <span>Peta Spasial (Tahap 4)</span>
-                    </span>
+                    {{-- Dropdown SPK --}}
+                    <div class="relative group hidden md:block">
+                        <button class="px-3.5 py-2 text-sm font-semibold rounded-lg transition-all flex items-center gap-1.5
+                                       {{ request()->routeIs('spk.*') ? 'bg-blue-50 text-blue-700 shadow-sm border border-blue-200/60' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' }}">
+                            <i class="fa-solid fa-brain text-sm"></i>
+                            <span>Analisis SPK</span>
+                            <i class="fa-solid fa-chevron-down text-[10px] opacity-60 group-hover:rotate-180 transition-transform duration-200"></i>
+                        </button>
+                        {{-- Dropdown Menu --}}
+                        <div class="absolute top-full left-0 mt-1 w-72 bg-white rounded-xl border border-slate-200 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-2">
+                            <a href="{{ route('spk.spk1') }}"
+                               class="flex items-start gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors {{ request()->routeIs('spk.spk1') ? 'bg-blue-50' : '' }}">
+                                <div class="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-users text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-slate-800">SPK 1 — Potensi Demografi</p>
+                                    <p class="text-xs text-slate-500 mt-0.5">Ranking potensi pasar & pertumbuhan penduduk</p>
+                                </div>
+                            </a>
+                            <a href="{{ route('spk.spk2') }}"
+                               class="flex items-start gap-3 p-3 rounded-lg hover:bg-amber-50 transition-colors {{ request()->routeIs('spk.spk2') ? 'bg-amber-50' : '' }}">
+                                <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-landmark-dome text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-slate-800">SPK 2 — Beban Administrasi</p>
+                                    <p class="text-xs text-slate-500 mt-0.5">Prioritas alokasi sumber daya & layanan publik</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
 
-                    <span class="px-3.5 py-2 text-sm font-medium text-slate-400 cursor-not-allowed hidden md:inline-flex items-center">
-                        <i class="fa-solid fa-brain mr-1.5 opacity-60"></i>
-                        <span>Analisis SPK (Tahap 3)</span>
+                    {{-- Placeholder Peta (aktif di Tahap 4) --}}
+                    <span class="px-3.5 py-2 text-sm font-medium text-slate-400 cursor-not-allowed hidden md:inline-flex items-center" title="Akan aktif di Tahap 4">
+                        <i class="fa-solid fa-map mr-1.5 opacity-60"></i>
+                        <span>Peta Spasial</span>
                     </span>
 
                     <a href="{{ route('kecamatan.create') }}" 
-                       class="ml-2 inline-flex items-center px-4 py-2 text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow-sm shadow-emerald-600/30 transition-all hover:shadow-md hover:-translate-y-0.5">
+                       class="ml-1 inline-flex items-center px-4 py-2 text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow-sm shadow-emerald-600/30 transition-all hover:shadow-md hover:-translate-y-0.5">
                         <i class="fa-solid fa-plus mr-1.5"></i>
                         <span>Tambah Data</span>
+
                     </a>
                 </nav>
             </div>
