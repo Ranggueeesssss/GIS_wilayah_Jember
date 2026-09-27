@@ -11,11 +11,14 @@ class PetaController extends Controller
     /**
      * Menampilkan halaman peta spasial (Web GIS) Kabupaten Jember.
      * Mengintegrasikan basemap Leaflet.js, Layer GeoJSON batas wilayah,
-     * dan Visualisasi Tematik Choropleth berdasarkan Skor SPK SAW.
+     * Visualisasi Tematik Choropleth, Popup Interaktif, dan Kontrol Peta Lanjutan.
      */
     public function index()
     {
         $totalKecamatan = Kecamatan::count();
+
+        // Daftar kecamatan terurut untuk kontrol pencarian / quick jump
+        $kecamatanList = Kecamatan::orderBy('nama')->get(['id', 'nama', 'latitude', 'longitude']);
 
         // Peta ID kecamatan untuk menghubungkan GeoJSON ke rute detail kecamatan
         $kecamatanMap = Kecamatan::pluck('id', 'nama');
@@ -58,6 +61,7 @@ class PetaController extends Controller
 
         return view('peta.index', [
             'totalKecamatan' => $totalKecamatan,
+            'kecamatanList'  => $kecamatanList,
             'kecamatanMap'   => $kecamatanMap,
             'spk1ByName'     => $spk1ByName,
             'spk2ByName'     => $spk2ByName,
